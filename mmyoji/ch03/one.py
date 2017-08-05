@@ -5,6 +5,8 @@ matplotlib.use('TkAgg')
 
 import matplotlib.pyplot as plt
 
+import scipy.stats as stats
+
 # 自民得票率
 x = np.array([
     41.4, 76.3, 59.2, 51.8, 52.5, 53.2, 62.4, 55.0, 52.7,
@@ -33,3 +35,5 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 # fig.show()
 plt.show()
+
+print(stats.pearsonr(x,y))
