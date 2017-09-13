@@ -99,4 +99,48 @@ class Three
   end
 end
 
-Three.run
+# Three.run
+
+## 9.8
+class Eight
+  DATA = [
+    171.0,
+    167.3,
+    170.6,
+    178.7,
+    162.3
+  ]
+
+  def self.run
+    n = DATA.count.to_f
+    average = DATA.sum / n
+
+    puts "i. #{average}"
+
+    puts "ii."
+    exps = []
+    DATA.combination(3) do |arr|
+      p arr
+
+      avg = arr.sum / 3.0
+      exps << avg
+      var = arr.map { |i| (i - avg) ** 2 }.sum / 2.0
+
+      puts "sample mean:     #{avg}"
+      puts "sample variance: #{var}"
+    end
+
+    puts "iii."
+    e = exps.map { |i| i / 10.0 }.sum
+    puts "E(x) = #{e}"
+
+    # E x bar ^ 2
+    v1 = exps.map { |i| (i ** 2 / 10.0) }.sum
+    # E(x) ^ 2
+    v2 = e ** 2
+
+    puts "v = #{v1 - v2}"
+  end
+end
+
+Eight.run
