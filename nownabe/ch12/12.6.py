@@ -12,11 +12,6 @@ kh2 = 0
 fi = freq.sum(axis=1)
 fj = freq.sum(axis=0)
 
-print(fi[0])
-print(fi[1])
-print(fj[0])
-print(fj[1])
-
 for i in range(2):
     for j in range(2):
         kh2 += ((n * freq[i, j] - fi[i] * fj[j]) ** 2) / (n * fi[i] * fj[j])
