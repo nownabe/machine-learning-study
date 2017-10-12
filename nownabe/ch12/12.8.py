@@ -16,7 +16,7 @@ def yates(data):
     z = data[1, 0]
     u = data[1, 1]
     n = data.sum()
-    c = n / 2 if x * u - y * z >= 0 else - n / 2
+    c = - n / 2 if x * u - y * z >= 0 else n / 2
     return (n * (x * u - y * z + c) ** 2) / ((x + z) * (y + u) * (x + y) * (z + u))
 
 
