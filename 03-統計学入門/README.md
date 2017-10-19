@@ -20,6 +20,9 @@
 
 各章に1つIssueを作成して、わからなかったところや練習問題の解答をコメントに記載していきます。
 
+# Issue
+https://github.com/Wondershake/machine-learning-study/milestone/1
+
 # 予習
 当日までに該当する部分を予習して練習問題を解いてきてください。
 
