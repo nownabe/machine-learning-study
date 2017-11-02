@@ -76,5 +76,3 @@ Just run `jupyter notebook` in a directory.
   * NOTE: `%matplotlib inline` と書いておけばグラフとか勝手に描画してくれる
 * k-最近傍法 (k-Nearest Neighbors)
 * このアプリは **教師あり学習**
-
-# Ch2
