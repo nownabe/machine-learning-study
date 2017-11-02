@@ -24,7 +24,7 @@
      * 精度と汎用性の tradeoff
 * モデルをいじりまわすより、データを増やした方がいいケースも多い(直感的にそんな気もする)
 
-## k-NN
+## 2.3.2 k-NN
 
 * KNeighbors分類機
   * 近傍点の数、データポイント間の距離測度が重要な parameters
@@ -38,7 +38,7 @@
     * 多数(数百以上)の特徴量を持つデータセットではうまく機能しない
     * ほとんどの特徴量が多くの場合0となるようなデータセットでは性能が悪い
 
-## Linear Model
+## 2.3.3 Linear Model
 
 * 線形モデル Linear Model
   * 入力特徴量の **線形関数 linear function** を用いて予測を行う
@@ -70,3 +70,125 @@
   * 一部の特徴量だけが重要なら前者、デフォルトではL2を採用する
 * 線形モデルの訓練・予測は非常に高速
 * 予測手法が比較的理解しやすい
+
+### 2.3.4 ナイーブベイズクラス分類器
+
+* 線形モデルに似たクラス分類器の一つ
+* 線形モデルより訓練が高速
+  * 代わりに、モデルの汎化性能が LogisticRegression や LinearSVC よりも僅かに劣る場合が多い
+  * クラスに対する統計値を個々の特徴量ごとに集めて、パラメータを学習するから速い(?)
+
+#### GaussianNB
+
+* 任意の連続値データに適用可. 高次元なデータに用いられる
+
+#### BernoulliNB:
+
+* 2値データを仮定している。
+* 個々のクラスに対して、特徴量ごとに非ゼロである場合をカウントする
+* paramters: alpha
+  * この値を変えてアルゴリズムの性能が極端に変わるわけではないが、これを調整することで精度を上げることができる?
+
+#### MultinomialNB:
+
+* カウントデータを仮定
+* 一般的には BernoulliNB よりは性能がいい
+  * 比較的多数の非ゼロ特徴量がある大きなドキュメントなどにはこちらが有効
+* paramters: alpha
+
+##### カウントデータ:
+
+* 個々の特徴量が何らかの整数カウントを表現しているデータ
+* e.g.) 文中に出てくる単語の出現数
+
+### pros/cons
+
+* Linear Model と共通
+* Linear Model ですら時間がかかるような巨大なデータセットに対するベースラインモデルとして適当
+
+### 2.3.5 決定木
+
+* Yes/No で答えられる質問で構成された階層的な木構造を学習
+* e.g.) 4種類(classes)の動物（熊、鷹、ペンギン、イルカ）を区別
+  * なるべく少ない質問で正しい答えにたどり着く
+  * 「羽毛があるか？」 -> Yes: 鷹 or ペンギン
+    * 「飛べるか？」 -> Yes: 鷹, No: ペンギン
+  * 木のノードは __質問(test)__ or __答え(葉 leaf)__ のどちらか
+* データが連続値の場合は Yes/No ではなく、「特徴量 i は値 a よりも大きいか？」となる
+* 頂点ノード(root)は情報量が最も多くなるものを選ぶ
+* 葉が single class のみになるまで再帰的に繰り返す
+  * single class しかない葉を pure という
+* 葉がすべて pure になるまで分割し続けるとモデルが複雑になる（過剰適合してしまう）
+  * 2つの方法で過剰適合を防ぐ
+  * 事前枝刈り pre-pruning: 木の生成を早めに止める
+  * (事後)枝刈り (post-)pruning: 一度木を構築してから情報の少ないノードを削除
+* sk-learn
+  * `from sklearn.tree import DecisionTreeRegressor/DecisionTreeClassifier`
+  * pre-pruning のみ
+  * `from sklearn.tree import export_graphviz` で木を可視化
+    * Ubuntu: `sudo apt install python3-graphviz && sudo pip3 install graphviz`
+    * macOS: `brew install graphviz && pip3 install graphviz`
+  * `(DecisionTreeRegressor)DecisionTreeClassifier#feature_importances_` で各特徴量の重要性(0~1)が見れる
+    * feature_importances_ が低かったからといって、その特徴量が持つ情報量が少ないとも限らない
+* 訓練データにない領域に対して「新しい」答えを生成できない
+* pre-pruning の paramters
+  * max_depth
+  * max_leaf_nodes
+  * min_samples_leaf
+
+#### pros/cons
+
+* pros
+  * 結果のモデルが容易に可視化可能
+  * 特徴量の正規化や標準化が必要ない
+    * 個々の特徴量は独立に処理され、データの分割はスケールに依存しないので
+* cons
+  * pre-pruning したとしても、過剰適合しやすい
+  * -> 汎化性能が低い傾向
+
+#### 決定木のアンサンブル法 Ensembles
+
+* ほとんどのケースでは決定木単体では使えない
+* 複数の機械学習を組み合わせる手法
+
+##### 1. ランダムフォレスト
+
+* 異なった方向に過剰適合した複数に決定木を作り、それらの平均を取ることで過剰適合を防ぐ
+* `from sklearn.ensemble import RandomForestClassifier/RandomForestRegressor`
+  * n_jobs: 並列実行のコア数。 -1 でマシンのすべてのコアを使う
+  * random_state: 乱数のシード。同じ値を渡せば結果が同じになる
+  * n_estimators: 決定木の数。（時間とメモリが許す限り）なるべく大きくする
+  * max_features: 個々の決定木の乱数性. 基本デフォルトでいい
+* デフォルトの params でも高い性能が出る
+* pros:
+  * 並行処理ができるのでコア数が多い場合は速く処理できる
+  * 性能が高い
+* cons:
+  * テキストデータなどの、非常に高次元で疎なデータに対してはうまく機能しない傾向
+    * その場合は Linear Model の方がいい
+  * 多くのメモリを消費する
+  * 訓練、予測ともに LM より遅い
+
+##### 2. 勾配ブースティング回帰木（勾配ブースティングマシン）
+
+* 回帰にもクラス分類にも使える
+* 複数の決定木を作るのは RandomForest と同じ
+* 一つ前の決定木の誤りを次の決定木が修正するようにして決定木を生成していく
+* 深さ1~5程度の非常に浅い決定木が用いられる
+  * -> メモリが小さくなり、予測も速くなる
+* params の設定さえちゃんとすればかなり性能はいい
+* `from sklearn.ensemble import GradientBoostingClassifier/Regressor`
+  * learning_rate: 学習率。それまでの決定木の誤りをどの程度強く補正しようとするか
+    * 値が大きすぎるとモデルが複雑になってしまう
+    * n_estimators を固定した上でこちらを調整することが多い
+  * n_estimators: 時間とメモリ制約から特定の値に決定
+* 基本的には頑健な RF から先に試す
+  * 頑健な: ここでは params の影響を受けづらいという意味
+  * 予測時間が非常に重要だったり、1%まで性能を絞り出したい場合, GB を使う
+* [xgboost pkg](http://xgboost.readthedocs.io/en/latest/python/python_intro.html) の方が高速でつかいやすい
+* pros:
+  * 教師あり学習の中で最も強力
+* cons:
+  * params の細かいチューニングが必要
+  * 訓練時間が長い
+  * 高次元で疎なデータに対してはうまく機能しない傾向
