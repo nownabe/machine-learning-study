@@ -231,3 +231,34 @@
   * 適切なデータの前処理が必要
   * 適切な params 調整
   * 検証が難しい
+
+### 2.3.8 ニューラルネットワーク（ディープラーニング）
+
+* ディープラーニング
+* ここでは **多層パーセプトロン multilayer perceptron MLP** のみ
+* sklearn
+  * `from sklearn.neural_network import MLPClassifier/MLPRegressor`
+* sklearn ではニューラルネットワークのごく一部しか扱ってないので、 keras, lasagna, tensor-flow などを使った方がいい
+* sklearn は GPU をサポートしてない
+* pros
+  * 信じられないほど複雑なモデルを構築できる
+  * すべての特徴量が同じ意味を持つ場合、最も良く機能する
+    * 逆にデータが同質じゃないなら決定木の方がいい
+* cons
+  * 遅い
+  * params 調整大変
+    * 隠れ層の数: 最初は1から始める
+    * 層あたりの隠れユニットの数: 入力層と同じくらい
+  * データの前処理もめんどい
+* コツ
+  1. 過剰適合するように大きいネットワークを作り、タスクがそのネットワークで訓練データを学習できるか見る
+  2. ネットワークを小さくする and/or alpha を増やして正則化を強化 -> 汎化性能を向上
+* params を学習するために用いるアルゴリズム
+  * `adam` default. データを標準正規分布にしておく必要（平均0, 分散1)
+  * `lbgfs` 頑健だが、訓練に時間がかかる
+  * `sgd` 多くの設定 params がある. 玄人向け
+  
+# 2.4 クラス分類器の不確実性推定
+
+* false positive と false negative
+* sklearn のほとんどのクラスは `decision_function` と `predict_proba` を実装しているので、これで不確実性を見れる
