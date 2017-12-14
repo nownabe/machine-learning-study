@@ -9,7 +9,7 @@ Python Machine Learning
 * @nownabe
 
 # Dates & Place
-* Every Thursday 11:30 - 13:00
+* Every Thursday 12:00 - 13:00
 * Wondershake Office 7F Room 1
 
 # Issues & Pull Requests
