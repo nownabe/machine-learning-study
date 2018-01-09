@@ -30,8 +30,16 @@ import perceptron
 ppn = perceptron.Perceptron(eta=0.1, n_iter=10)
 ppn.fit(X, y)
 
-plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
-plt.xlabel('Epochs')
-plt.ylabel('# of misclassifications')
-plt.show()
+# plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+# plt.xlabel('Epochs')
+# plt.ylabel('# of misclassifications')
+# plt.show()
 
+from my_functions import plot_decision_regions
+
+plot_decision_regions(X, y, classifier=ppn)
+
+plt.xlabel('sepal length [cm]')
+plt.ylabel('petal length [cm]')
+plt.legend(loc='uppper left')
+plt.show()

@@ -1,4 +1,6 @@
 from matplotlib.colors import ListedColormap
+import matplotlib.pyplot as plt
+import numpy as np
 
 def plot_decision_regions(X, y, classifier, resolution=0.02):
     markers = ('s', 'x', 'o', '^', 'v')
