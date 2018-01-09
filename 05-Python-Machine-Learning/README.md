@@ -2,6 +2,7 @@ Python Machine Learning
 =======================
 
 * [Python Machine Learning](https://www.amazon.com/dp/1787125939) (原著)
+    * [GitHub repo](https://github.com/rasbt/python-machine-learning-book/)
 * [Python機械学習プログラミング](https://www.amazon.co.jp/dp/B01HGIPIAK)
 
 # Members
