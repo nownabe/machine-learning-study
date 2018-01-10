@@ -24,7 +24,7 @@ class AdalineGD(object):
 
             errors = (y - output)
 
-            self.w_[1] += self.eta * X.T.dot(errors)
+            self.w_[1:] += self.eta * X.T.dot(errors)
 
             self.w_[0] += self.eta * errors.sum()
 
