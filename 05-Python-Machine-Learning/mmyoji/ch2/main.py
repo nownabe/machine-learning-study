@@ -66,17 +66,36 @@ X_std = np.copy(X)
 X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
 X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
-ada = AdalineGD(n_iter=15, eta=0.01)
+# ada = AdalineGD(n_iter=15, eta=0.01)
+# ada.fit(X_std, y)
+
+# plot_decision_regions(X_std, y, classifier=ada)
+# plt.title('Adaline - Gradient Descent')
+# plt.xlabel('sepal length [standarized')
+# plt.ylabel('petal length [standarized')
+# plt.legend(loc='upper left')
+# plt.show()
+
+# plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
+# plt.xlabel('Epochs')
+# plt.ylabel('Sum-squared-error')
+# plt.show()
+
+from adaline_sgd import AdalineSGD
+
+ada = AdalineSGD(n_iter=15, eta=0.01, random_state=1)
 ada.fit(X_std, y)
 
 plot_decision_regions(X_std, y, classifier=ada)
-plt.title('Adaline - Gradient Descent')
-plt.xlabel('sepal length [standarized')
-plt.ylabel('petal length [standarized')
+plt.title('Adaline - Stochastic Gradient Descent')
+plt.xlabel('sepal length [standarized]')
+plt.ylabel('petal length [standarized]')
 plt.legend(loc='upper left')
+plt.tight_layout()
 plt.show()
 
 plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
 plt.xlabel('Epochs')
-plt.ylabel('Sum-squared-error')
+plt.ylabel('Average Cost')
 plt.show()
+
