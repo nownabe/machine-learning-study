@@ -1,5 +1,5 @@
-from matplotlib.colors import ListedColorMap
-import matplitlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+import matplotlib.pyplot as plt
 
 import numpy as np
 

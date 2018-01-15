@@ -32,4 +32,16 @@ y_pred = ppn.predict(X_test_std)
 
 from sklearn.metrics import accuracy_score
 
-print("Accuracy: %.2f" % accuracy_score(y_test, y_pred))
+# print("Accuracy: %.2f" % accuracy_score(y_test, y_pred))
+
+from my_funcs import plot_decision_regions
+import matplotlib.pyplot as plt
+
+X_combined_std = np.vstack((X_train_std, X_test_std))
+y_combined = np.hstack((y_train, y_test))
+plot_decision_regions(X=X_combined_std, y=y_combined, classifier=ppn,
+                      test_idx=range(105, 150))
+plt.xlabel('petal length [standarized]')
+plt.ylabel('petal width [standarized]')
+plt.legend(loc='upper left')
+plt.show()
