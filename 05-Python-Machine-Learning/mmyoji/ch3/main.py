@@ -20,3 +20,12 @@ sc.fit(X_train)
 
 X_train_std = sc.transform(X_train)
 X_test_std  = sc.transform(X_test)
+
+from sklearn.linear_model import Perceptron
+
+ppn = Perceptron(max_iter=40, eta0=0.1, random_state=0, shuffle=True)
+ppn.fit(X_train_std, y_train)
+
+y_pred = ppn.predict(X_test_std)
+
+print("Misclassified samples: %d" % (y_test != y_pred).sum())
