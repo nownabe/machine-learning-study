@@ -28,4 +28,8 @@ ppn.fit(X_train_std, y_train)
 
 y_pred = ppn.predict(X_test_std)
 
-print("Misclassified samples: %d" % (y_test != y_pred).sum())
+# print("Misclassified samples: %d" % (y_test != y_pred).sum())
+
+from sklearn.metrics import accuracy_score
+
+print("Accuracy: %.2f" % accuracy_score(y_test, y_pred))
