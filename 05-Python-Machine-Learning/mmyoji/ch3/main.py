@@ -73,19 +73,35 @@ from sklearn.linear_model import LogisticRegression
 
 # lr.predict_proba(X_test_std[0, :])
 
-weights, params = [], []
+# weights, params = [], []
+# 
+# for c in np.arange(-5, 5, dtype=float):
+#     lr = LogisticRegression(C=10**c, random_state=0)
+#     lr.fit(X_train_std, y_train)
+#     weights.append(lr.coef_[1])
+#     params.append(10**c)
+# 
+# weights = np.array(weights)
+# plt.plot(params, weights[:, 0], label='petal length')
+# plt.plot(params, weights[:, 1], label='petal width', linestyle="--")
+# plt.ylabel('weight conefficient')
+# plt.xlabel('C')
+# plt.legend(loc='upper left')
+# plt.xscale('log')
+# plt.show()
 
-for c in np.arange(-5, 5, dtype=float):
-    lr = LogisticRegression(C=10**c, random_state=0)
-    lr.fit(X_train_std, y_train)
-    weights.append(lr.coef_[1])
-    params.append(10**c)
+# from sklearn.svm import SVC
+# 
+# svm = SVC(kernel='linear', C=1.0, random_state=0)
+# svm.fit(X_train_std, y_train)
+# plot_decision_regions(X_combined_std, y_combined, classifier=svm, test_idx=range(105, 150))
+# plt.xlabel('petal length [standarized]')
+# plt.ylabel('petal width  [standarized]')
+# plt.legend(loc='upper left')
+# plt.show()
 
-weights = np.array(weights)
-plt.plot(params, weights[:, 0], label='petal length')
-plt.plot(params, weights[:, 1], label='petal width', linestyle="--")
-plt.ylabel('weight conefficient')
-plt.xlabel('C')
-plt.legend(loc='upper left')
-plt.xscale('log')
-plt.show()
+from sklearn.linear_model import SGDClassifier
+
+ppn = SGDClassifier(loss='perceptron')
+lr = SGDClassifier(loss='log')
+svm = SGDClassifier(loss='hinge')
