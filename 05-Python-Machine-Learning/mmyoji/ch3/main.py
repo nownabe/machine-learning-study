@@ -90,7 +90,7 @@ from sklearn.linear_model import LogisticRegression
 # plt.xscale('log')
 # plt.show()
 
-# from sklearn.svm import SVC
+from sklearn.svm import SVC
 # 
 # svm = SVC(kernel='linear', C=1.0, random_state=0)
 # svm.fit(X_train_std, y_train)
@@ -100,8 +100,41 @@ from sklearn.linear_model import LogisticRegression
 # plt.legend(loc='upper left')
 # plt.show()
 
-from sklearn.linear_model import SGDClassifier
+# from sklearn.linear_model import SGDClassifier
+# 
+# ppn = SGDClassifier(loss='perceptron')
+# lr = SGDClassifier(loss='log')
+# svm = SGDClassifier(loss='hinge')
 
-ppn = SGDClassifier(loss='perceptron')
-lr = SGDClassifier(loss='log')
-svm = SGDClassifier(loss='hinge')
+np.random.seed(0)
+X_xor = np.random.randn(200, 2)
+y_xor = np.logical_xor(X_xor[:, 0] > 0, X_xor[:, 1] > 0)
+y_xor = np.where(y_xor, 1, -1)
+# plt.scatter(X_xor[y_xor==1, 0], X_xor[y_xor==1, 1], c='b', marker='x', label='1')
+# plt.scatter(X_xor[y_xor==-1, 0], X_xor[y_xor==-1, 1], c='r', marker='s', label='-1')
+# plt.xlim([-3, 3])
+# plt.ylim([-3, 3])
+# plt.legend(loc='best')
+# plt.show()
+
+# svm = SVC(kernel='rbf', random_state=0, gamma=0.10, C=10.0)
+# svm.fit(X_xor, y_xor)
+# plot_decision_regions(X_xor, y_xor, classifier=svm)
+# plt.legend(loc='upper left')
+# plt.show()
+
+# svm = SVC(kernel='rbf', random_state=0, gamma=0.2, C=1.0)
+# svm.fit(X_train_std, y_train)
+# plot_decision_regions(X_combined_std, y_combined, classifier=svm, test_idx=range(105, 150))
+# plt.xlabel('petal length [standarized]')
+# plt.ylabel('petal width  [standarized]')
+# plt.legend(loc='upper left')
+# plt.show()
+
+svm = SVC(kernel='rbf', random_state=0, gamma=100.0, C=1.0)
+svm.fit(X_train_std, y_train)
+plot_decision_regions(X_combined_std, y_combined, classifier=svm, test_idx=range(105, 150))
+plt.xlabel('petal length [standarized]')
+plt.ylabel('petal width  [standarized]')
+plt.legend(loc='upper left')
+plt.show()
