@@ -27,3 +27,11 @@ from sklearn.preprocessing import StandardScaler
 stdsc = StandardScaler()
 X_train_std = stdsc.fit_transform(X_train)
 X_test_std = stdsc.transform(X_test)
+
+from sklearn.neighbors import KNeighborsClassifier
+import matplotlib.pyplot as plt
+from sbs import SBS
+
+knn = KNeighborsClassifier(n_neighbors=2)
+sbs = SBS(knn, k_features=1)
+sbs.fit(X_train_std, y_train)
