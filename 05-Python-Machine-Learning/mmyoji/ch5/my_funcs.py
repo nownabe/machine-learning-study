@@ -23,3 +23,20 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     for idx, cl in enumerate(np.unique(y)):
         plt.scatter(x=X[y==cl, 0], y=X[y==cl, 1], alpha=0.8, c=cmap(idx),
                     marker=markers[idx], label=cl)
+
+from scipy.spatial.distance import pdist, squareform
+from scipy import exp
+from scipy.linalg import eigh
+
+def rbf_kernel_pca(X, gamma, n_components):
+    sq_dists = pdist(X, 'sqeuclidean')
+    mat_sq_dists = squareform(sq_dists)
+    K = exp(-gamma*mat_sq_dists)
+    N = K.shape[0]
+    one_n = np.ones((N, N)) / N
+    K = K - one_n.dot(K) - K.dot(one_n) + one_n.dot(K).dot(one_n)
+
+    eigvals, eigvecs = eigh(K)
+
+    X_pc = np.column_stack((eigvecs[:, -i] for i in range(1, n_components + 1)))
+    return X_pc
