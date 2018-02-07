@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import numpy as np
 import re
+import pickle
 
 from nltk.stem.porter import PorterStemmer
 
@@ -144,3 +145,12 @@ X_test = vect.transform(X_test)
 print('Accuracy: %.3f' % clf.score(X_test, y_test))
 
 clf = clf.partial_fit(X_test, y_test)
+
+
+# 9.1
+dest = os.path.join('movieclassifier', 'pkl_objects')
+if not os.path.exists(dest):
+    os.makedirs(dest)
+
+pickle.dump(stop, open(os.path.join(dest, 'stopwords.pkl'), 'wb'), protocol=4)
+pickle.dump(clf, open(os.path.join(dest, 'classfier.pkl'), 'wb'), protocol=4)
