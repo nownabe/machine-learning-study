@@ -7,3 +7,4 @@ Machine Learning Study
 * [4th - Introduction to Machine Learning with Python](https://github.com/Wondershake/machine-learning-study/tree/master/04-Introduction-to-Machine-Learning-with-Python)
 * [5th - Python Machine Learning](https://github.com/Wondershake/machine-learning-study/tree/master/05-Python-Machine-Learning)
 * [6th - 言語処理のための機械学習入門](https://github.com/Wondershake/machine-learning-study/tree/master/06-言語処理のための機械学習入門)
+* [7th - ゼロから作るDeep Learning 2 - 自然言語処理編](https://github.com/Wondershake/machine-learning-study/milestone/5)
